@@ -23,6 +23,11 @@
     this.pos[0] = newPosX;
     this.pos[1] = newPosY;
   }
+  
+  MovingObject.prototype.matchVelocity = function(velocity) {
+  	this.vel[0] += velocity[0];
+  	this.vel[1] += velocity[1];
+  }
 
   MovingObject.prototype.isOutOfBounds = function() {
     return (this.pos[0] < 0 ||

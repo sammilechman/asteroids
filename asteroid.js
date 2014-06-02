@@ -10,7 +10,7 @@
     this.radius = Asteroid.RADIUS;
   };
 
-  Asteroid.COLOR = "black";
+  Asteroid.COLOR = "red";
 
   Asteroid.RADIUS = 30;
 
