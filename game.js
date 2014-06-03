@@ -8,6 +8,7 @@
     this.bullets = [];
     this.starLayer1 = [];
     this.starLayer2 = [];
+    this.score = 0;
   }
 
   Game.DIM_X = 900;
@@ -49,7 +50,6 @@
   }
 
   Game.prototype.fireBullet = function() {
-    console.log("Pew pew");
     if (!(this.ship.vel[0] === 0 && this.ship.vel[1] === 0)) {
       this.bullets.push(this.ship.fireBullet());
     }
@@ -112,6 +112,9 @@
 
   Game.prototype.removeAsteroid = function(idx) {
     this.asteroids.splice(idx, 1);
+    this.asteroids.push(Asteroids.Asteroid.randomAsteroid(Game.DIM_X, -25));
+    this.score++;
+    document.getElementById("score").innerHTML = this.score;
   }
 
   Game.prototype.removeBullet = function(idx) {
@@ -181,8 +184,9 @@
 
     for (var i = this.asteroids.length - 1; i >= 0; i--) {
       if (this.asteroids[i].isCollidedWith(this.ship)) {
-        console.log("BAM!");
+        this.ctx.fillText("Click on the board to start the game", 230, 250);
         this.stop();
+        this.ctx.fillText("Click on the board to start the game", 230, 250);
       }
 
       for (var j = this.bullets.length -1; j >= 0; j--) {
@@ -200,6 +204,11 @@
     this.handleLostObjects();
     this.draw();
   }
+  
+  Game.prototype.loadSprites = function() {
+    document.getElementById("score").innerHTML = 0;
+  	this.start(10);
+  }
 
   Game.prototype.start = function(numAsteroids) {
     var game = this;
@@ -215,3 +224,12 @@
     clearInterval(Game.INTERVAL_ID);
   }
 })(this);
+
+
+
+
+
+
+
+
+

@@ -13,12 +13,40 @@
     <script src="keymaster.js"></script>
 </head>
 <body>
+
+	<div id="title">
+		<img src="asteroids-logo.png"></img>
+	</div>
+	
+	<div id="canvas-holder">
     <canvas width="900" height="450" style="border: thin solid black"></canvas>
+	</div>
+	
+	<div id='bottom'>
+	<h2>Score: <span id='score'></span></h2>
+	<h3>Use WASD to pilot the spaceship and SPACEBAR to fire</h3>
+	<div>
 
     <script>
         var canvas = document.getElementsByTagName("canvas")[0];
         var ctx = canvas.getContext("2d");
-        new Asteroids.Game(ctx).start(9);
+        ctx.font="30px Georgia";
+        ctx.fillText("Click on the board to start the game", 230, 250);
+        
+        function loadImage(name) {
+        	var image = new Image();
+        	image.src = name;
+        	return image;
+        }
+        
+        var asteroidImage = loadImage("asteroid.png");
+        var shipImage = loadImage("ship.png");
+        var bulletImage = loadImage("bullet.png");
+        
+        canvas.onclick = function() {    
+			new Asteroids.Game(ctx).loadSprites(Asteroids.Game.start);
+        };
+        
     </script>
 </body>
 </html>

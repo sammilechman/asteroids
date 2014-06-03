@@ -44,7 +44,10 @@
     // console.log(this.radius)
     ctx.arc(this.pos[0], this.pos[1], this.radius, 0, 2 * Math.PI);
 
-    ctx.fill();
+	ctx.fill();
+    
+//     ctx.drawImage(asteroidImage, this.pos[0], this.pos[1]);
+//     imageObj.src = "asteroid.png";
   }
 
   MovingObject.prototype.isCollidedWith = function(otherObject) {
