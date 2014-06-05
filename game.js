@@ -20,21 +20,21 @@
       this.asteroids.push(Asteroids.Asteroid.randomAsteroid(Game.DIM_X, Game.DIM_Y));
     }
   }
-  
+
   Game.prototype.addStarLayers = function() {
   	for (var num = 0; num < 20; num++) {
 		var x = (Math.random() * 900);
 		var y = (Math.random() * 450);
 		var pos = [x, y];
-		
+
 		var genRandomVel = function() {
 			var value =  Math.random() * Math.random() / Math.random();
 			if (value > 2 || value < -2) { return genRandomVel(); }
 			return value;
 		};
-		
+
 		var vel = [genRandomVel(), genRandomVel()];
-		
+
 		var star = new Asteroids.Star(pos, vel);
   		this.starLayer1.push(star)
   	}
@@ -43,26 +43,26 @@
 		var y = (Math.random() * 450);
 		var pos = [x, y];
 		var vel = [0,0];
-		
+
 		var star = new Asteroids.Star(pos, vel);
   		this.starLayer2.push(star)
   	}
   }
 
   Game.prototype.fireBullet = function() {
-    if (!(this.ship.vel[0] === 0 && this.ship.vel[1] === 0)) {
+    // if (!(this.ship.vel[0] === 0 && this.ship.vel[1] === 0)) {
       this.bullets.push(this.ship.fireBullet());
-    }
+    // }
   }
-  
-  Game.prototype.handleStarParallax = function (impulse) {
-	var x = impulse[0]/2;
-  	var y = impulse[1]/2;
-  	
+
+  Game.prototype.handleStarParallax = function () {
+	var x = this.ship.vel[0]/2;
+  	var y = this.ship.vel[1]/2;
+
   	this.starLayer1.forEach(function(star) {
   		star.matchVelocity([(x * -1),(y * -1)]);
   	});
-  	
+
   	this.starLayer2.forEach(function(star) {
   		star.matchVelocity([((x/2)),((y/2) * -1)]);
   	});
@@ -75,26 +75,21 @@
         this.handleOutOfBounds(this.asteroids[i]);
       }
     }
-    
     if (this.ship.isOutOfBounds()) {
     	this.handleOutOfBounds(this.ship);
     }
-    
     this.starLayer1.forEach(function(star) {
     	if (star.isOutOfBounds()) {
     		that.handleOutOfBounds(star);
     	}
     });
-    
     this.starLayer2.forEach(function(star) {
     	if (star.isOutOfBounds()) {
     		that.handleOutOfBounds(star);
     	}
     });
-	
   }
-  
-  
+
   Game.prototype.handleOutOfBounds = function(object) {
   	if (object.pos[0] >= 900) {
   		object.pos[0] = 0.1;
@@ -160,20 +155,16 @@
     var that = this;
 
     key('w', function() {
-    	that.ship.power([0, -1]);
-    	that.handleStarParallax([0, -1]);
+    	that.ship.power(1);
+    	that.handleStarParallax();
     });
-    key('s', function() {
-    	that.ship.power([0,  1]);
-    	that.handleStarParallax([0, 1]);
-    });
+
     key('a', function() {
-    	that.ship.power([-1, 0]);
-    	that.handleStarParallax([-1, 0]);
+      that.ship.turn("counter-clockwise");
+
     });
     key('d', function() {
-    	that.ship.power([1,  0]);
-    	that.handleStarParallax([1, 0]);
+      that.ship.turn("clockwise");
     });
     key('space', function() {
     	that.fireBullet();
@@ -204,7 +195,7 @@
     this.handleLostObjects();
     this.draw();
   }
-  
+
   Game.prototype.loadSprites = function() {
     document.getElementById("score").innerHTML = 0;
   	this.start(10);
@@ -223,13 +214,5 @@
   Game.prototype.stop = function() {
     clearInterval(Game.INTERVAL_ID);
   }
+
 })(this);
-
-
-
-
-
-
-
-
-

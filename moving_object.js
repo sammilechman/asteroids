@@ -23,10 +23,10 @@
     this.pos[0] = newPosX;
     this.pos[1] = newPosY;
   }
-  
+
   MovingObject.prototype.matchVelocity = function(velocity) {
-  	this.vel[0] += velocity[0];
-  	this.vel[1] += velocity[1];
+  	this.vel[0] = velocity[0];
+  	this.vel[1] = velocity[1];
   }
 
   MovingObject.prototype.isOutOfBounds = function() {
@@ -45,7 +45,7 @@
     ctx.arc(this.pos[0], this.pos[1], this.radius, 0, 2 * Math.PI);
 
 	ctx.fill();
-    
+
 //     ctx.drawImage(asteroidImage, this.pos[0], this.pos[1]);
 //     imageObj.src = "asteroid.png";
   }

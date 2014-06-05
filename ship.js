@@ -6,38 +6,49 @@
     Asteroids.MovingObject.call(this, pos, vel);
     this.radius = Ship.RADIUS;
     this.color = Ship.COLOR;
+    this.angle = 0;
   };
 
-  Ship.RADIUS = 10;
+  Ship.RADIUS = 16;
   Ship.COLOR = "black";
+  RAD_CON = Math.PI/180;
 
   Ship.inherits(Asteroids.MovingObject);
 
-  Ship.prototype.power = function(impulse) {
-    this.vel[0] += impulse[0];
-    this.vel[1] += impulse[1];
+  Ship.prototype.power = function(i) {
+    var deltaVelX = i*Math.sin(this.angle*RAD_CON);
+    var deltaVelY = i*-Math.cos(this.angle*RAD_CON);
+    this.vel[0] += deltaVelX;
+    this.vel[1] += deltaVelY;
+
+    // this.vel[0] += impulse[0];
+    // this.vel[1] += impulse[1];
+  }
+
+  Ship.prototype.turn = function(dir) {
+    if (dir == "clockwise") {
+      this.angle += 12;
+    } else if (dir == "counter-clockwise"){
+      this.angle -= 12;
+    }
   }
 
   Ship.prototype.fireBullet = function() {
     var velX = this.vel[0];
     var velY = this.vel[1];
 
-    var bulVelX = velX * 3;
-    var bulVelY = velY * 3;
+    var bulVelX = Math.sin(this.angle*RAD_CON)*8+this.vel[0];
+    var bulVelY = -Math.cos(this.angle*RAD_CON)*8+this.vel[1];
 
     return new Asteroids.Bullet([this.pos[0], this.pos[1]], [bulVelX, bulVelY]);
   }
-  
-  Ship.prototype.draw = function(ctx) {
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    
-    ctx.arc(this.pos[0], this.pos[1], this.radius, 0, 2 * Math.PI);
 
-	ctx.fill();
-    
-    ctx.drawImage(shipImage, this.pos[0]-10, this.pos[1]-11);
+  Ship.prototype.draw = function(ctx) {
+    ctx.save();
+    ctx.translate(this.pos[0], this.pos[1]);
+    ctx.rotate(this.angle * RAD_CON);
+    ctx.drawImage(shipImage, -(shipImage.width/2), -(shipImage.height/2));
+    ctx.restore();
   }
 
 })(this);
-
