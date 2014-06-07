@@ -9,6 +9,7 @@
     this.starLayer1 = [];
     this.starLayer2 = [];
     this.score = 0;
+    // this.bulletCounter = 0;
   }
 
   Game.DIM_X = 900;
@@ -151,32 +152,13 @@
     this.ship.move();
   }
 
-  Game.prototype.bindKeyHandlers = function() {
-    var that = this;
-
-    key('w', function() {
-    	that.ship.power(1);
-    	that.handleStarParallax();
-    });
-
-    key('a', function() {
-      that.ship.turn("counter-clockwise");
-
-    });
-    key('d', function() {
-      that.ship.turn("clockwise");
-    });
-    key('space', function() {
-    	that.fireBullet();
-    });
-  }
-
   Game.prototype.checkCollisions = function() {
 
     for (var i = this.asteroids.length - 1; i >= 0; i--) {
       if (this.asteroids[i].isCollidedWith(this.ship)) {
         this.ctx.fillText("Click on the board to start the game", 230, 250);
         this.stop();
+        payingAttention = true;
         this.ctx.fillText("Click on the board to start the game", 230, 250);
       }
 
@@ -189,7 +171,26 @@
     }
   }
 
+  Game.prototype.registerKeys = function() {
+    this.bulletCounter++;
+
+    var keys = key.getPressedKeyCodes();
+    if (keys.indexOf(68) > -1) {
+      this.ship.turn("clockwise");
+    }
+    if (keys.indexOf(65) > -1) {
+      this.ship.turn("counter-clockwise");
+    }
+    if (keys.indexOf(87) > -1) {
+      this.ship.power(0.5);
+    }
+    if ((keys.indexOf(32) > -1)){ // && (this.bulletCounter%4==0)) {
+      this.fireBullet();
+    }
+  }
+
   Game.prototype.step = function() {
+    this.registerKeys();
     this.move();
     this.checkCollisions();
     this.handleLostObjects();
@@ -203,7 +204,7 @@
 
   Game.prototype.start = function(numAsteroids) {
     var game = this;
-    game.bindKeyHandlers();
+    // game.bindKeyHandlers();
     game.addAsteroids(numAsteroids);
     game.addStarLayers();
     Game.INTERVAL_ID = setInterval(function() {

@@ -27,9 +27,9 @@
 
   Ship.prototype.turn = function(dir) {
     if (dir == "clockwise") {
-      this.angle += 12;
+      this.angle += 10;
     } else if (dir == "counter-clockwise"){
-      this.angle -= 12;
+      this.angle -= 10;
     }
   }
 

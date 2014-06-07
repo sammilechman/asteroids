@@ -11,6 +11,7 @@
     <script src="ship.js"></script>
     <script src="bullet.js"></script>
     <script src="keymaster.js"></script>
+		<script src="jquery-1.11.1.min.js"></script>
 </head>
 <body>
 
@@ -31,7 +32,8 @@
         var canvas = document.getElementsByTagName("canvas")[0];
         var ctx = canvas.getContext("2d");
         ctx.font="30px Georgia";
-        ctx.fillText("Click on the board to start the game", 230, 250);
+        ctx.fillText("Press 'Enter' to start the game", 255, 250);
+				payingAttention = true;
 
         function loadImage(name) {
         	var image = new Image();
@@ -44,8 +46,20 @@
         var bulletImage = loadImage("images/bullet.png");
 
         canvas.onclick = function() {
-			new Asteroids.Game(ctx).loadSprites(Asteroids.Game.start);
+
         };
+
+				$(document).keydown(function(e) {
+    			if(e.keyCode == 32) {
+        		e.preventDefault();
+    			}
+					if(e.keyCode == 13 && payingAttention==true) {
+						e.preventDefault();
+						payingAttention = false;
+						new Asteroids.Game(ctx).loadSprites(Asteroids.Game.start);
+					}
+				});
+
 
     </script>
 </body>
