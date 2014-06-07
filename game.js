@@ -9,7 +9,7 @@
     this.starLayer1 = [];
     this.starLayer2 = [];
     this.score = 0;
-    // this.bulletCounter = 0;
+    this.shootingEnabled = true;
   }
 
   Game.DIM_X = 900;
@@ -51,9 +51,14 @@
   }
 
   Game.prototype.fireBullet = function() {
-    // if (!(this.ship.vel[0] === 0 && this.ship.vel[1] === 0)) {
+    var that = this;
+    // if (this.shootingEnabled) {
       this.bullets.push(this.ship.fireBullet());
+      // this.shootingEnabled = false;
     // }
+    // window.setTimeout(function(){
+    //   that.shootingEnabled = true;
+    // }, 1000)
   }
 
   Game.prototype.handleStarParallax = function () {
@@ -156,10 +161,9 @@
 
     for (var i = this.asteroids.length - 1; i >= 0; i--) {
       if (this.asteroids[i].isCollidedWith(this.ship)) {
-        this.ctx.fillText("Click on the board to start the game", 230, 250);
         this.stop();
         payingAttention = true;
-        this.ctx.fillText("Click on the board to start the game", 230, 250);
+        // $("canvas").clearRect();
       }
 
       for (var j = this.bullets.length -1; j >= 0; j--) {
@@ -184,13 +188,14 @@
     if (keys.indexOf(87) > -1) {
       this.ship.power(0.5);
     }
-    if ((keys.indexOf(32) > -1)){ // && (this.bulletCounter%4==0)) {
+    if ((keys.indexOf(32) > -1)){
       this.fireBullet();
     }
   }
 
   Game.prototype.step = function() {
     this.registerKeys();
+    this.handleStarParallax();
     this.move();
     this.checkCollisions();
     this.handleLostObjects();
