@@ -14,44 +14,40 @@
 		<script src="jquery-1.11.1.min.js"></script>
 </head>
 <body>
-
 	<div id="title">
 		<img src="images/asteroids-logo.png"></img>
 	</div>
-
 	<div id="canvas-holder">
     <canvas width="900" height="450" style="border: thin solid black"></canvas>
 	</div>
-
 	<div id='bottom'>
-	<h2>score: <span id='score'></span></h2>
-	<h3>use SPACE, "A", "D", and "W" to play</h3>
+		<h2>score: <span id='score'></span></h2>
+		<h3>use SPACE, "A", "D", and "W" to play</h3>
 	</div>
-
   <script>
-      var canvas = document.getElementsByTagName("canvas")[0];
-      var ctx = canvas.getContext("2d");
-      ctx.font="30px Georgia";
-      ctx.fillText("Press 'Enter' to start the game", 255, 250);
-			gameIsOver = true;
-      function loadImage(name) {
-      	var image = new Image();
-      	image.src = name;
-      	return image;
-      }
-      var asteroidImage = loadImage("images/asteroid.png");
-      var shipImage = loadImage("images/ship2.gif");
-      var bulletImage = loadImage("images/bullet.png");
-			$(document).keydown(function(e) {
-  			if(e.keyCode == 32) {
-      		e.preventDefault();
-  			}
-				if(e.keyCode == 13 && gameIsOver==true) {
-					e.preventDefault();
-					gameIsOver = false;
-					new Asteroids.Game(ctx).loadSprites(Asteroids.Game.start);
-				}
-			});
+    var canvas = document.getElementsByTagName("canvas")[0];
+    var ctx = canvas.getContext("2d");
+    ctx.font="30px Georgia";
+    ctx.fillText("Press 'Enter' to start the game", 255, 250);
+		gameIsOver = true;
+    function loadImage(name) {
+    	var image = new Image();
+    	image.src = name;
+    	return image;
+    }
+    var asteroidImage = loadImage("images/asteroid.png");
+    var shipImage = loadImage("images/ship2.gif");
+    var bulletImage = loadImage("images/bullet.png");
+		$(document).keydown(function(e) {
+			if(e.keyCode == 32) {
+    		e.preventDefault();
+			}
+			if(e.keyCode == 13 && gameIsOver==true) {
+				e.preventDefault();
+				gameIsOver = false;
+				new Asteroids.Game(ctx).loadSprites(Asteroids.Game.start);
+			}
+		});
   </script>
 </body>
 </html>
