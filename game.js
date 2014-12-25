@@ -162,7 +162,7 @@
     for (var i = this.asteroids.length - 1; i >= 0; i--) {
       if (this.asteroids[i].isCollidedWith(this.ship)) {
         this.stop();
-        payingAttention = true;
+        gameIsOver = true;
         // $("canvas").clearRect();
       }
 
