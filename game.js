@@ -52,23 +52,15 @@
 
   Game.prototype.fireBullet = function() {
     var that = this;
-    // if (this.shootingEnabled) {
-      this.bullets.push(this.ship.fireBullet());
-      // this.shootingEnabled = false;
-    // }
-    // window.setTimeout(function(){
-    //   that.shootingEnabled = true;
-    // }, 1000)
+    this.bullets.push(this.ship.fireBullet());
   }
 
   Game.prototype.handleStarParallax = function () {
 	var x = this.ship.vel[0]/2;
   	var y = this.ship.vel[1]/2;
-
   	this.starLayer1.forEach(function(star) {
   		star.matchVelocity([(x * -1),(y * -1)]);
   	});
-
   	this.starLayer2.forEach(function(star) {
   		star.matchVelocity([((x/2)),((y/2) * -1)]);
   	});
@@ -158,14 +150,11 @@
   }
 
   Game.prototype.checkCollisions = function() {
-
     for (var i = this.asteroids.length - 1; i >= 0; i--) {
       if (this.asteroids[i].isCollidedWith(this.ship)) {
         this.stop();
         gameIsOver = true;
-        // $("canvas").clearRect();
       }
-
       for (var j = this.bullets.length -1; j >= 0; j--) {
         if (this.bullets[j].isCollidedWith(this.asteroids[i])) {
           this.removeAsteroid(i);
@@ -177,7 +166,6 @@
 
   Game.prototype.registerKeys = function() {
     this.bulletCounter++;
-
     var keys = key.getPressedKeyCodes();
     if (keys.indexOf(68) > -1) {
       this.ship.turn("clockwise");
@@ -209,7 +197,6 @@
 
   Game.prototype.start = function(numAsteroids) {
     var game = this;
-    // game.bindKeyHandlers();
     game.addAsteroids(numAsteroids);
     game.addStarLayers();
     Game.INTERVAL_ID = setInterval(function() {
@@ -220,5 +207,4 @@
   Game.prototype.stop = function() {
     clearInterval(Game.INTERVAL_ID);
   }
-
 })(this);

@@ -20,9 +20,6 @@
     var deltaVelY = i*-Math.cos(this.angle*RAD_CON);
     this.vel[0] += deltaVelX;
     this.vel[1] += deltaVelY;
-
-    // this.vel[0] += impulse[0];
-    // this.vel[1] += impulse[1];
   }
 
   Ship.prototype.turn = function(dir) {
@@ -36,10 +33,8 @@
   Ship.prototype.fireBullet = function() {
     var velX = this.vel[0];
     var velY = this.vel[1];
-
     var bulVelX = Math.sin(this.angle*RAD_CON)*8+this.vel[0];
     var bulVelY = -Math.cos(this.angle*RAD_CON)*8+this.vel[1];
-
     return new Asteroids.Bullet([this.pos[0], this.pos[1]], [bulVelX, bulVelY]);
   }
 
@@ -50,5 +45,4 @@
     ctx.drawImage(shipImage, -(shipImage.width/2), -(shipImage.height/2));
     ctx.restore();
   }
-
 })(this);

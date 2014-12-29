@@ -1,5 +1,3 @@
-// Require in HTML before all other files.
-
 Function.prototype.inherits = function(SuperClass) {
   var SubClass = this;
   function Surrogate() {};

@@ -1,5 +1,4 @@
 (function (root) {
-
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
   var Star = Asteroids.Star = function (pos, vel, radius, color) {
@@ -7,7 +6,7 @@
 	this.radius = Star.RADIUS;
     this.color = Star.COLOR;
   };
-  
+
   Star.RADIUS = 1;
   Star.COLOR = "white";
 
@@ -17,5 +16,4 @@
     this.vel[0] += impulse[0];
     this.vel[1] += impulse[1];
   }
-
 })(this);
