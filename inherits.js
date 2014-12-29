@@ -5,7 +5,6 @@ Function.prototype.inherits = function(SuperClass) {
   SubClass.prototype = new Surrogate();
 }
 
-
 function MovingObject(speed, size) {
   this.speed = speed;
   this.size = size;
